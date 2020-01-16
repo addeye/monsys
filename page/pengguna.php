@@ -1,4 +1,5 @@
 <?php
+$user->cek_admin();
 $user = new User();
 $data = $user->getAll();
 
@@ -37,6 +38,7 @@ foreach ($data as $key => $value) {
       <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Pengguna</h3>
+          <a href="index.php?page=pengguna_add" class="btn btn-primary pull-right"><i class="fa fa-plus"></i></a>
         </div>
         <div class="box-body">
           <div class="row">
@@ -84,6 +86,7 @@ foreach ($data as $key => $value) {
               <table class="table table-bordered">
               <thead>
                 <tr>
+                  <th></th>
                   <th>No Induk</th>
                   <th>Nama</th>
                   <th>No HP</th>
@@ -94,6 +97,11 @@ foreach ($data as $key => $value) {
               <tbody>
                 <?php foreach ($data as $key => $value): ?>
                 <tr>
+                  <td>
+                    <a href="index.php?page=pengguna_edit&id=<?=$value['FPID']?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
+                    <a href="javascript:void(0)" onclick="confirmation('<?=$value['FPID']?>','page/pengguna_act.php')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                    <a href="javascript:void(0)" onclick="confirmation('<?=$value['FPID']?>','page/pengguna_reset_act.php')" class="btn btn-warning btn-xs"><i class="fa fa-refresh"></i></a>
+                  </td>
                   <td><?=$value['NO_INDUK']?></td>
                   <td><?=$value['NAMA']?></td>
                   <td><?=$value['NO_HP']?></td>

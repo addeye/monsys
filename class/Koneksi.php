@@ -8,7 +8,7 @@
  */
 class Koneksi {
 	private $host = "localhost";
-	private $db_name = "fingerprint";
+	private $db_name = "monsysv2";
 	private $username = "root";
 	private $password = "";
 	public $conn;

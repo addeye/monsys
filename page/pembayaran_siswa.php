@@ -6,6 +6,7 @@ $userf = new User();
 $sppset = new SppSet();
 $spp = new SppAjaran();
 $sppbayar = new SppBayar();
+$mutubayar = new MutuBayar();
 $asuransi = new Asuransi();
 $asuransibayar = new AsuransiBayar();
 $mutu = new Mutu();
@@ -41,10 +42,10 @@ $kel = $kelas->getById($akademik_aktif['kelas_id']);
         </div>
         <div class="box-body">
           <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-8">
               <div class="box box-primary box-solid">
                   <div class="box-header with-border">
-                      <h1 class="box-title">SPP</h1>
+                      <h1 class="box-title">SPP & PM</h1>
                   </div>
                   <div class="box-body">
                   <div class="table-responsive">
@@ -54,7 +55,8 @@ $kel = $kelas->getById($akademik_aktif['kelas_id']);
                               <th>No</th>
                               <th>Tanggal</th>
                               <th>Bulan</th>
-                              <th>Ket</th>
+                              <th>SPP</th>
+                              <th>PM</th>
                           </tr>
                           <?php foreach ($sppset->getByAjaran($th['nama']) as $key => $row): ?>
                           <tr>
@@ -68,6 +70,11 @@ $kel = $kelas->getById($akademik_aktif['kelas_id']);
                                     <?=$sppbayar->getByNisPeriode($_SESSION['user_id'], $row['id'])['lunas'] == 'Yes' ? '<i class="text-blue fa fa-check"></i>' : ''?>
                                 </div>
                               </td>
+                              <td>
+                                <div class="checkbox icheck">
+                                    <?=$mutubayar->getByNisPeriode($_SESSION['user_id'], $row['id'])['lunas'] == 'Yes' ? '<i class="text-blue fa fa-check"></i>' : ''?>
+                                </div>
+                              </td>
                           </tr>
                             <?php endforeach; ?>
                       </table>
@@ -77,58 +84,34 @@ $kel = $kelas->getById($akademik_aktif['kelas_id']);
               </div>
           </div>
           <div class="col-md-4">
-              <div class="box box-info box-solid">
-                  <div class="box-header with-border">
-                      <h1 class="box-title">Asuransi</h1>
-                  </div>
-                  <div class="box-body">
-                    <div class="table-responsive">
-                    <?php if ($_SESSION['user_id']): ?>
-                      <table class="table">
-                          <tr>
-                              <th>Tanggal</th>
-                              <th>Ket</th>
-                          </tr>
-                          <tr>
-                            <td>
-                                <?=$asuransibayar->getByAkademik($akademik_aktif['id'])['tanggal'] ? date('d-m-Y', strtotime($asuransibayar->getByAkademik($akademik_aktif['id'])['tanggal'])) : ''?>
-                            </td>
-                            <td>
-                            <?=$asuransibayar->getByAkademik($akademik_aktif['id'])['lunas'] == 'Yes' ? 'Lunas' : 'Belum Lunas'?>
-                            </td>
-                          </tr>
-                      </table>
-                    <?php endif; ?>
-                    </div>
-                  </div>
-              </div>
-              <div class="box box-success box-solid">
-                  <div class="box-header with-border">
-                      <h1 class="box-title">Peningkatan Mutu</h1>
-                  </div>
-                  <div class="box-body">
-                  <div class="table-responsive">
-                    <?php if ($_SESSION['user_id']): ?>
-                      <table class="table">
-                          <tr>
-                              <th>Tanggal</th>
-                              <th>Ket</th>
-                          </tr>
-                          <tr>
-                              <td>
-                                <?=$mutu->getByNis($_SESSION['user_id'])['tanggal'] ? date('d-m-Y', strtotime($mutu->getByNis($_SESSION['user_id'])['tanggal'])) : ''?>
-                              </td>
-                              <td>
-                                <?=$mutu->getByNis($_SESSION['user_id'])['lunas'] == 'Yes' ? 'Lunas' : 'Belum Lunas'?>
-                              </td>
-                          </tr>
-                      </table>
-                    <?php endif; ?>
-                  </div>
-                  </div>
-              </div>
+
           </div>
           <div class="col-md-4">
+          <div class="box box-info box-solid">
+                <div class="box-header with-border">
+                    <h1 class="box-title">Asuransi</h1>
+                </div>
+                <div class="box-body">
+                <div class="table-responsive">
+                <?php if ($_SESSION['user_id']): ?>
+                    <table class="table">
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Ket</th>
+                        </tr>
+                        <tr>
+                        <td>
+                            <?=$asuransibayar->getByAkademik($akademik_aktif['id'])['tanggal'] ? date('d-m-Y', strtotime($asuransibayar->getByAkademik($akademik_aktif['id'])['tanggal'])) : ''?>
+                        </td>
+                        <td>
+                        <?=$asuransibayar->getByAkademik($akademik_aktif['id'])['lunas'] == 'Yes' ? 'Lunas' : 'Belum Lunas'?>
+                        </td>
+                        </tr>
+                    </table>
+                <?php endif; ?>
+                </div>
+                </div>
+              </div>
               <div class="box box-warning box-solid">
                   <div class="box-header with-border">
                       <h1 class="box-title">Investasi</h1>

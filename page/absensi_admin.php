@@ -1,4 +1,5 @@
 <?php
+$user->cek_admin();
 $absensi = new Absensi();
 $kelas_sel = '';
 
@@ -37,11 +38,11 @@ $row = $user->getById($_SESSION['user_id']);
           <div class="col-md-12 row">
             <form method="post" class="form-inline">
             <div class="form-group">
-              <label>Mulai</label>
+              <label>Tanngal Awal</label>
               <input type="date" name="from" class="form-control" value="<?=isset($from) ? $from : ''?>" required>
             </div>
             <div class="form-group">
-              <label>Selesai</label>
+              <label>Tanggal Akhir</label>
               <input type="date" name="to" class="form-control" value="<?=isset($to) ? $to : ''?>" required>
             </div>
             <div class="form-group">

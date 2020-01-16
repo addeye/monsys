@@ -1,0 +1,6 @@
+{
+    "require": {
+        "eleirbag89/telegrambotphp": "^1.3",
+        "phpoffice/phpspreadsheet": "^1.8"
+    }
+}

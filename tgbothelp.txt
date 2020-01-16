@@ -1,0 +1,12 @@
+https://9b06b676.ngrok.io
+
+994163398:AAGLMfACOdayD9vuUPLL1MNjm1Jd1rpcXuA
+
+
+https://api.telegram.org/bot994163398:AAGLMfACOdayD9vuUPLL1MNjm1Jd1rpcXuA/deleteWebhook
+
+https://api.telegram.org/bot994163398:AAGLMfACOdayD9vuUPLL1MNjm1Jd1rpcXuA/setWebhook?url=https://982008b8.ngrok.io/tg/update.php
+
+https://api.telegram.org/bot994163398:AAGLMfACOdayD9vuUPLL1MNjm1Jd1rpcXuA/getWebhookInfo
+
+https://api.telegram.org/bot994163398:AAGLMfACOdayD9vuUPLL1MNjm1Jd1rpcXuA/getUpdates

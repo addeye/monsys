@@ -7,6 +7,7 @@ $userf = new User();
 $sppset = new SppSet();
 $spp = new SppAjaran();
 $sppbayar = new SppBayar();
+$mutubayar = new MutuBayar();
 $asuransi = new Asuransi();
 $asuransibayar = new AsuransiBayar();
 $mutu = new Mutu();
@@ -71,7 +72,7 @@ if (isset($_REQUEST['nis'])) {
         <input type="hidden" name="aksi" value="add">
         <div class="box-body">
           <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-8">
               <div class="box box-primary box-solid">
                   <div class="box-header with-border">
                       <h1 class="box-title">SPP</h1>
@@ -86,18 +87,30 @@ if (isset($_REQUEST['nis'])) {
                               <th>Nominal</th>
                               <th>Bulan</th>
                               <th>Bayar</th>
+                              <th>Nominal PM</th>
+                              <th>Bayar PM</th>
+                              <th></th>
                           </tr>
                           <?php foreach ($sppset->getByAjaran($th['nama']) as $key => $row): ?>
                           <input type="hidden" name="nominal_spp[]" value="<?=rupiah($spp->getByTingkat($kel['tingkat'], $th['nama'])['nominal'])?>">
+                          <input type="hidden" name="nominal_mutu[]" value="<?=rupiah($mutu->getByNis($_REQUEST['nis'], $th['nama'])['nominal'])?>">
                           <input type="hidden" name="spp_set_id[]" value="<?=$row['id']?>">
                           <tr>
                               <td><?=$key + 1?></td>
-                              <td class="col-xs-2"><input type="text" name="tanggal_spp[]" class="form-control datepicker" value="<?=$sppbayar->getByNisPeriode($_REQUEST['nis'], $row['id'])['tanggal'] ? date('d-m-Y', strtotime($sppbayar->getByNisPeriode($_REQUEST['nis'], $row['id'])['tanggal'])) : ''?>"></td>
+                              <td class="col-xs-2">
+                                  <input type="text" name="tanggal_spp[]" class="form-control datepicker" value="<?=$sppbayar->getByNisPeriode($_REQUEST['nis'], $row['id'])['tanggal'] ? date('d-m-Y', strtotime($sppbayar->getByNisPeriode($_REQUEST['nis'], $row['id'])['tanggal'])) : ''?>">
+                                </td>
                               <td><?=rupiah($spp->getByTingkat($kel['tingkat'], $th['nama'])['nominal'])?></td>
                               <td><?=bulan()[$row['bulan']]?> <?=$row['tahun']?></td>
                               <td>
                                 <div class="checkbox icheck">
                                     <input type="checkbox" name="lunas_<?=$key?>" value="Yes" <?=$sppbayar->getByNisPeriode($_REQUEST['nis'], $row['id'])['lunas'] == 'Yes' ? 'checked' : ''?>>
+                                </div>
+                              </td>
+                              <td><?=rupiah($mutu->getByNis($_REQUEST['nis'], $th['nama'])['nominal'])?></td>
+                              <td>
+                                <div class="checkbox icheck">
+                                    <input type="checkbox" name="lunasmutu_<?=$key?>" value="Yes" <?=$mutubayar->getByNisPeriode($_REQUEST['nis'], $row['id'])['lunas'] == 'Yes' ? 'checked' : ''?>>
                                 </div>
                               </td>
                               <td>
@@ -114,7 +127,7 @@ if (isset($_REQUEST['nis'])) {
               </div>
           </div>
           <div class="col-md-4">
-              <div class="box box-info box-solid">
+          <div class="box box-info box-solid">
                   <div class="box-header with-border">
                       <h1 class="box-title">Asuransi</h1>
                   </div>
@@ -131,8 +144,8 @@ if (isset($_REQUEST['nis'])) {
                           <tr>
                             <td><input type="text" class="form-control datepicker" name="tanggal_asuransi" value="<?=$asuransibayar->getByAkademik($akademik_aktif['id'])['tanggal'] ? date('d-m-Y', strtotime($asuransibayar->getByAkademik($akademik_aktif['id'])['tanggal'])) : ''?>"></td>
                             <td>
-                                <?=rupiah($asuransi->getByTingkatAjaran($akademik_aktif['tingkat'], $th['nama'])['nominal'])?>
-                                <input type="hidden" name="nominal_asuransi" value="<?=rupiah($asuransi->getByTingkatAjaran($akademik_aktif['tingkat'], $th['nama'])['nominal'])?>">
+                                <?=rupiah($asuransi->getByTingkatAjaran($kel['tingkat'], $th['nama'])['nominal'])?>
+                                <input type="hidden" name="nominal_asuransi" value="<?=rupiah($asuransi->getByTingkatAjaran($kel['tingkat'], $th['nama'])['nominal'])?>">
                             </td>
                             <td>
                               <div class="checkbox icheck">
@@ -150,41 +163,6 @@ if (isset($_REQUEST['nis'])) {
                     </div>
                   </div>
               </div>
-              <div class="box box-success box-solid">
-                  <div class="box-header with-border">
-                      <h1 class="box-title">Peningkatan Mutu</h1>
-                  </div>
-                  <div class="box-body">
-                  <div class="table-responsive">
-                    <?php if (isset($_REQUEST['nis'])): ?>
-                      <table class="table">
-                          <tr>
-                              <th>Tanggal</th>
-                              <th>Nominal</th>
-                              <th>Bayar</th>
-                              <th></th>
-                          </tr>
-                          <tr>
-                              <td><input type="text" class="form-control datepicker" name="tanggal_mutu" value="<?=$mutu->getByNis($_REQUEST['nis'])['tanggal'] ? date('d-m-Y', strtotime($mutu->getByNis($_REQUEST['nis'])['tanggal'])) : ''?>"></td>
-                              <td><?=rupiah($mutu->getByNis($_REQUEST['nis'])['nominal'])?></td>
-                              <td>
-                                <div class="checkbox icheck">
-                                    <input type="checkbox" name="lunas_mutu" value="Yes" <?=$mutu->getByNis($_REQUEST['nis'])['lunas'] == 'Yes' ? 'checked' : ''?>>
-                                </div>
-                              </td>
-                              <td>
-                              <?php if ($mutu->getByNis($_REQUEST['nis'])['lunas'] == 'Yes'): ?>
-                                <a href="javascript:void(0)" onclick="confirmation('<?=$_REQUEST['nis']?>','page/pembayaran_mutu_del.php')" class="btn btn-danger btn-md"><i class="fa fa-trash"></i></a>
-                              <?php endif; ?>
-                              </td>
-                          </tr>
-                      </table>
-                    <?php endif; ?>
-                  </div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-4">
               <div class="box box-warning box-solid">
                   <div class="box-header with-border">
                       <h1 class="box-title">Investasi</h1>

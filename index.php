@@ -17,7 +17,7 @@ if (isset($_GET['logout'])) {
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Monitoring System | Beranda</title>
+  <title>Absensi | Beranda</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="theme/bower_components/jquery-ui/themes/base/css/jquery-ui.css">
@@ -83,6 +83,10 @@ if (isset($_GET['logout'])) {
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <!-- jQuery 3 -->
+<script src="theme/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="app.js"></script>
 </head>
 <!-- ADD THE CLASS sidebar-collapse TO HIDE THE SIDEBAR PRIOR TO LOADING THE SITE -->
 <body class="hold-transition skin-blue ">
@@ -93,9 +97,9 @@ if (isset($_GET['logout'])) {
     <!-- Logo -->
     <a href="index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>Mon</b>Sys</span>
+      <span class="logo-mini"><b>MAN</b>4</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Monitoring</b>System</span>
+      <span class="logo-lg"><b>Absensi</b> MAN 4</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -112,13 +116,13 @@ if (isset($_GET['logout'])) {
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="theme/dist/img/avatar5.png" class="user-image" alt="User Image">
+              <img src="theme/dist/img/logoman4.png" class="user-image" alt="User Image">
               <span class="hidden-xs"><?=$_SESSION['user_name']?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="theme/dist/img/avatar5.png" class="img-circle" alt="User Image">
+                <img src="theme/dist/img/logoman4.png" class="img-circle" alt="User Image">
 
                 <p>
                   <?=$_SESSION['user_name']?>
@@ -147,7 +151,7 @@ if (isset($_GET['logout'])) {
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image" title="<?=$th['nama']?>">
-          <img src="theme/dist/img/avatar5.png" class="img-circle" alt="User Image">
+          <img src="theme/dist/img/logoman4.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><?=$_SESSION['user_name']?></p>
@@ -166,8 +170,20 @@ if (isset($_GET['logout'])) {
   <div class="content-wrapper">
     <?php
     include 'alert.php';
-if (isset($_GET['page']) and file_exists('page/' . $_GET['page'] . '.php')) {
-    include 'page/' . $_GET['page'] . '.php';
+if (isset($_GET['page'])) {
+    if ($_SESSION['level'] == 'guru') {
+        if (file_exists('page/guru/' . $_GET['page'] . '.php')) {
+            include 'page/guru/' . $_GET['page'] . '.php';
+        } else {
+            include 'page/home.php';
+        }
+    } elseif ($_SESSION['level'] == 'admin' or $_SESSION['level'] == 'siswa') {
+        if (file_exists('page/' . $_GET['page'] . '.php')) {
+            include 'page/' . $_GET['page'] . '.php';
+        } else {
+            include 'page/home.php';
+        }
+    }
 } else {
     include 'page/home.php';
 }
@@ -177,9 +193,9 @@ if (isset($_GET['page']) and file_exists('page/' . $_GET['page'] . '.php')) {
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 1.4.0
+      <b>Version</b> 4.1.0
     </div>
-    <strong>Copyright &copy; 2018 | MonSys by <a href="#">ICT Center</a>.</strong> All rights
+    <strong>Copyright &copy; 2019 | Monsys by <a href="http://fajarmedia.com">fajarmedia.com</a>.</strong> All rights
     reserved.
   </footer>
 
@@ -191,8 +207,7 @@ if (isset($_GET['page']) and file_exists('page/' . $_GET['page'] . '.php')) {
 
 <?php include 'modal.php'?>
 
-<!-- jQuery 3 -->
-<script src="theme/bower_components/jquery/dist/jquery.min.js"></script>
+
 <!-- Bootstrap 3.3.7 -->
 <script src="theme/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- iCheck -->
@@ -295,5 +310,6 @@ $('.js-data-example-ajax').select2();
           }).hide();
       });
     </script>
+
 </body>
 </html>

@@ -41,4 +41,16 @@ switch ($_POST['aksi']) {
         }
         break;
 }
+
+if($_GET['direct_set']=='yes'){
+    $id = $_GET['id'];
+    $semester_id = $_GET['semester_id'];
+    $set = $tajaran->set_semester($id,$semester_id);
+    if ($set) {
+        success('Berhasil ganti semester');
+    } else {
+        error();
+    }
+}
+
 $tajaran->redirect('../index.php?page=tahun_ajaran');

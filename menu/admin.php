@@ -5,30 +5,42 @@
       <i class="fa fa-home"></i> <span>Dashboard</span>
     </a>
   </li>
-  <li>
-    <a href="index.php?page=data_siswa">
-      <i class="fa fa-users"></i> <span>Data Siswa</span>
+  <li class="treeview">
+    <a href="#">
+      <i class="fa fa-cubes"></i>
+      <span>Master</span>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
     </a>
-  </li>
-  <li>
-    <a href="index.php?page=data_kelas">
-      <i class="fa fa-cube"></i> <span>Data Kelas</span>
-    </a>
-  </li>
-  <li>
-    <a href="index.php?page=kenaikan_kelas">
-      <i class="fa fa-exchange"></i> <span>Kenaikan Kelas</span>
-    </a>
-  </li>
-  <li>
-    <a href="index.php?page=tahun_ajaran">
-      <i class="fa fa-briefcase"></i> <span>Tahun Pelajaran</span>
-    </a>
+    <ul class="treeview-menu">
+      <li><a href="index.php?page=tahun_ajaran"><i class="fa fa-circle-o"></i> Tahun Ajaran</a></li>
+      <li><a href="index.php?page=data_siswa"><i class="fa fa-circle-o"></i> Siswa dan Guru</a></li>
+      <li><a href="index.php?page=data_kelas"><i class="fa fa-circle-o"></i> Kelas</a></li>
+      <li><a href="index.php?page=data_mapel"><i class="fa fa-circle-o"></i> Mapel</a></li>
+    </ul>
   </li>
   <li class="treeview">
     <a href="#">
+      <i class="fa fa-graduation-cap"></i>
+      <span>Akademik</span>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
+    </a>
+    <ul class="treeview-menu">
+      <!--<li><a href="index.php?page=set_kd"><i class="fa fa-circle-o"></i> Set KD</a></li>-->
+      <li><a href="index.php?page=tugas_mengajar"><i class="fa fa-circle-o"></i> Tugas Mengajar</a></li>
+      <li><a href="index.php?page=guru_piket"><i class="fa fa-circle-o"></i> Guru Piket</a></li>
+      <li><a href="index.php?page=ketua_kelas"><i class="fa fa-circle-o"></i> Ketua Kelas</a></li>
+      <li><a href="index.php?page=wakakur"><i class="fa fa-circle-o"></i> Wakakur</a></li>
+      <li><a href="index.php?page=kenaikan_kelas"><i class="fa fa-circle-o"></i> Kenaikan Kelas</a></li>
+    </ul>
+  </li>
+<!--   <li class="treeview">
+    <a href="#">
       <i class="fa fa-money"></i>
-      <span>Set Pembayaran</span>
+     <span>Set Pembayaran</span>
       <span class="pull-right-container">
         <i class="fa fa-angle-left pull-right"></i>
       </span>
@@ -46,7 +58,7 @@
     <a href="index.php?page=pembayaran">
       <i class="fa fa-dollar"></i> <span>Pembayaran</span>
     </a>
-  </li>
+  </li>-->
   <li>
     <a href="index.php?page=pengguna">
       <i class="fa fa-users"></i> <span>Pengguna</span>
@@ -54,12 +66,12 @@
   </li>
   <li>
     <a href="index.php?page=absensi_admin">
-      <i class="fa fa-check-square"></i> <span>Absensi</span>
+      <i class="fa fa-check-square"></i> <span>Rekap Absensi</span>
     </a>
   </li>
   <li>
-    <a href="index.php?page=spp_admin">
+<!--    <a href="index.php?page=spp_admin">
       <i class="fa fa-list-alt"></i> <span>SPP & Pertsipasi Masyarakat</span>
-    </a>
+    </a>-->
   </li>
 </ul>

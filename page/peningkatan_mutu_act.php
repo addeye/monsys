@@ -14,7 +14,8 @@ switch ($_POST['aksi']) {
         foreach ($nis as $key => $row) {
             $post = [
                 'nominal' => $_POST['nom_mutu'][$key],
-                'no_induk' => $row
+                'no_induk' => $row,
+                'tahun_ajaran' => $th['nama']
             ];
 
             $rowdata = $data->getByNis($row);

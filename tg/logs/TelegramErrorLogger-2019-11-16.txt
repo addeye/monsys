@@ -1,0 +1,40 @@
+============[Date]============
+[ 2019-11-16 13:50:28  Asia/Jakarta ] 
+==========[Response]==========
+ok:			False
+error_code:		400
+description:		Bad Request: message text is empty
+=========[Sent Data]==========
+[ref]
+ref.update_id= 563395806
+ref.message.message_id= 126
+ref.message.from.id= 201076628
+ref.message.from.is_bot= false
+ref.message.from.first_name= Mokhamad
+ref.message.from.last_name= Ariadi
+ref.message.from.username= deyelovi
+ref.message.from.language_code= en
+ref.message.chat.id= 201076628
+ref.message.chat.first_name= Mokhamad
+ref.message.chat.last_name= Ariadi
+ref.message.chat.username= deyelovi
+ref.message.chat.type= private
+ref.message.date= 1573887027
+ref.message.text= /notif_6695
+ref.message.entities.0.offset= 0
+ref.message.entities.0.length= 11
+ref.message.entities.0.type= bot_command
+
+
+[ref]
+ref.text= 
+
+
+============[Trace]===========
+#0 /home/addeye/Projects/monsys/tg/Telegram.php(3201): TelegramErrorLogger::log(Array, Array)
+#1 /home/addeye/Projects/monsys/tg/Telegram.php(111): Telegram->sendAPIRequest('https://api.tel...', Array)
+#2 /home/addeye/Projects/monsys/tg/Telegram.php(196): Telegram->endpoint('sendMessage', Array)
+#3 /home/addeye/Projects/monsys/tg/update.php(64): Telegram->sendMessage(Array)
+#4 /home/addeye/.config/composer/vendor/cpriego/valet-linux/server.php(204): require('/home/addeye/Pr...')
+#5 {main}
+

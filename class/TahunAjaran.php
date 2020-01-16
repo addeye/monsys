@@ -35,7 +35,7 @@ class TahunAjaran extends Controller
     public function getByActive()
     {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM t_ajaran WHERE status = 'Yes' ");
+            $stmt = $this->conn->prepare("SELECT t_ajaran.*, t_semester.nama as semester FROM t_ajaran INNER JOIN t_semester ON t_ajaran.semester_id=t_semester.id WHERE status = 'Yes' ");
             $stmt->execute();
             $rowFinger = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -49,7 +49,7 @@ class TahunAjaran extends Controller
     {
         try {
             $data = $this->transformasiData($data);
-            $stmt = $this->conn->prepare('INSERT INTO `t_ajaran`(`id`, `nama`, `status`) VALUES (NULL,?,?)');
+            $stmt = $this->conn->prepare('INSERT INTO `t_ajaran`(`id`, `nama`,`semester_id`, `status`) VALUES (NULL,?,?,?)');
             $stmt->execute($data);
             return true;
         } catch (PDOException $e) {
@@ -95,12 +95,26 @@ class TahunAjaran extends Controller
         }
     }
 
+    public function set_semester($id,$semester_id)
+    {
+        try {
+            $stmt = $this->conn->prepare("UPDATE t_ajaran SET semester_id=$semester_id WHERE id = $id");
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
     private function transformasiData($data = [])
     {
         $result = [];
         if ($data['nama'] != '') {
             $result[] = $data['nama'];
         }
+        //semester_id
+        $result[] = 1;
+
         if ($data['status'] != '') {
             $result[] = $data['status'];
         }

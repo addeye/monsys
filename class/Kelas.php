@@ -1,9 +1,17 @@
 <?php
 class Kelas extends Controller
 {
+    private $tahun_ajaran;
+    private $semester;
+    private $tahun;
+
     public function __construct()
     {
         parent::__construct();
+        $this->tahun_ajaran = new TahunAjaran();
+        $aktif = $this->tahun_ajaran->getByActive();
+        $this->semester = $aktif['semester_id'];
+        $this->tahun = $aktif['nama'];
     }
 
     public function getAll()
@@ -25,6 +33,19 @@ class Kelas extends Controller
             $stmt = $this->conn->prepare("SELECT * FROM t_kelas WHERE id_kelas = $id ");
             $stmt->execute();
             $rowFinger = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $rowFinger;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function getByMengajarGuru($id_guru)
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT t_kelas.id_kelas, t_kelas.kelas FROM t_mengajar INNER JOIN t_kelas ON t_mengajar.kelas_id=t_kelas.id_kelas WHERE t_mengajar.guru_id='$id_guru' AND t_mengajar.semester='$this->semester' AND t_mengajar.tahun_ajaran='$this->tahun' GROUP BY t_mengajar.kelas_id");
+            $stmt->execute();
+            $rowFinger = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $rowFinger;
         } catch (PDOException $e) {

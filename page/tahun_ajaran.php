@@ -1,6 +1,7 @@
 <?php
 $user->cek_admin();
 $tajaran = new TahunAjaran();
+$tsemester = new Semester();
 $data = $tajaran->getAll();
 
 if (isset($_POST['nama'])) {
@@ -40,6 +41,7 @@ if (isset($_POST['nama'])) {
                   <th class="col-xs-1"></th>
                   <th>No</th>
                   <th>Tahun</th>
+                  <th>Semester</th>
                   <th>Status Aktif</th>
                 </tr>
               </thead>
@@ -47,11 +49,18 @@ if (isset($_POST['nama'])) {
                 <?php foreach ($data as $key => $value): ?>
                 <tr>
                   <td>
-                    <a href="index.php?page=tahun_ajaran_edit&id=<?=$value['id']?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
-                    <a href="javascript:void(0)" onclick="confirmation('<?=$value['id']?>','page/tahun_ajaran_act.php')" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                    <a href="index.php?page=tahun_ajaran_edit&id=<?=$value['id']?>" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>
+                    <a href="javascript:void(0)" onclick="confirmation('<?=$value['id']?>','page/tahun_ajaran_act.php')" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
                   </td>
                   <td><?=$key + 1?></td>
                   <td><?=$value['nama']?></td>
+                  <td>
+                    <select onchange="location = this.value;">
+                      <?php foreach($tsemester->getAll() as $ts): ?>
+                      <option value="page/tahun_ajaran_act.php?direct_set=yes&id=<?=$value['id']?>&semester_id=<?=$ts['id']?>" <?=$value['semester_id']==$ts['id']?'selected':''?> ><?=$ts['nama']?></option>
+                      <?php endforeach; ?>
+                    </select>
+                  </td>
                   <td>
                     <a href="javascript:void(0)" onclick="confirmation_set_active('<?=$value['id']?>','page/tahun_ajaran_act.php')"><?=$value['status']?></a>
                   </td>

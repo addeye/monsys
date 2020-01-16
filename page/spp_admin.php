@@ -1,4 +1,5 @@
 <?php
+$user->cek_admin();
 $spp = new Spp();
 
 $user = new User();

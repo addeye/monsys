@@ -30,8 +30,9 @@ foreach ($sheets as $sheet) {
 
         $nis = $sheet['A'];
         $nama = $sheet['B'];
-        $kelas_nama = $sheet['C'];
-        $tingkat = $sheet['D'];
+        $no_hp = $sheet['C'];
+        $kelas_nama = $sheet['D'];
+        $tingkat = $sheet['E'];
 
         $kelas_id = $kelas->getByNama($kelas_nama)['id_kelas'];
 
@@ -51,6 +52,7 @@ foreach ($sheets as $sheet) {
                 'FPID' => $nis,
                 'NO_INDUK' => $nis,
                 'NAMA' => $nama,
+                'NO_HP' => $no_hp,
                 'KELAS' => $kelas_nama,
                 'TINGKAT' => $tingkat
             ];

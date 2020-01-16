@@ -33,10 +33,10 @@ class Mutu extends Controller
         }
     }
 
-    public function getByNis($id)
+    public function getByNis($id, $tahun_ajaran)
     {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM t_mutu WHERE no_induk = $id ");
+            $stmt = $this->conn->prepare("SELECT * FROM t_mutu WHERE no_induk = $id and tahun_ajaran='$tahun_ajaran'");
             $stmt->execute();
             $rowFinger = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -50,7 +50,7 @@ class Mutu extends Controller
     {
         try {
             $data = $this->transformasiData($data);
-            $stmt = $this->conn->prepare('INSERT INTO t_mutu (id,no_induk,nominal) VALUES (NULL,?,?)');
+            $stmt = $this->conn->prepare('INSERT INTO t_mutu (id,no_induk,nominal,tahun_ajaran) VALUES (NULL,?,?,?)');
             $stmt->execute($data);
             return true;
         } catch (PDOException $e) {
@@ -111,6 +111,9 @@ class Mutu extends Controller
         }
         if ($data['nominal'] != '') {
             $result[] = preg_replace('/\D/', '', $data['nominal']);
+        }
+        if (isset($data['tahun_ajaran']) && $data['tahun_ajaran'] != '') {
+            $result[] = $data['tahun_ajaran'];
         }
         return $result;
     }

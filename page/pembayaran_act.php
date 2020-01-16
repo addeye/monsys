@@ -2,6 +2,7 @@
 require_once '../session.php';
 $user->cek_admin();
 $data = new SppBayar();
+$mutubayar = new MutuBayar();
 $file = 'pembayaran';
 $nis = $_REQUEST['nis'];
 
@@ -18,9 +19,11 @@ switch ($_POST['aksi']) {
         // print_r($_POST);
         // return false;
         $nominal_spp = $_POST['nominal_spp'];
+        $nominal_mutu = $_POST['nominal_mutu'];
         $set_spp = $_POST['spp_set_id'];
         $tanggal_spp = $_POST['tanggal_spp'];
         $jml = 0;
+        $jmlmutu = 0;
 
         //spp
         foreach ($set_spp as $key => $row) {
@@ -31,6 +34,14 @@ switch ($_POST['aksi']) {
                     'tanggal' => date('Y-m-d', strtotime($tanggal_spp[$key])),
                     'lunas' => $_POST['lunas_' . $key],
                     'nominal' => $nominal_spp[$key]
+                ];
+
+                $dbmutu = [
+                    'no_induk' => $nis,
+                    'spp_set_id' => $row,
+                    'tanggal' => date('Y-m-d', strtotime($tanggal_spp[$key])),
+                    'lunas' => $_POST['lunasmutu_' . $key] ? $_POST['lunasmutu_' . $key] : 'No',
+                    'nominal' => $nominal_mutu[$key]
                 ];
 
                 $check = $data->getByNisPeriode($nis, $row);
@@ -44,6 +55,20 @@ switch ($_POST['aksi']) {
                     $store = $data->store($dbrow);
                     if ($store) {
                         $jml++;
+                    }
+                }
+
+                $checkmutu = $mutubayar->getByNisPeriode($nis, $row);
+
+                if ($checkmutu) {
+                    $update = $mutubayar->update($dbmutu, $checkmutu['id']);
+                    if ($update) {
+                        $jmlmutu++;
+                    }
+                } else {
+                    $store = $mutubayar->store($dbmutu);
+                    if ($store) {
+                        $jmlmutu++;
                     }
                 }
             }
@@ -131,6 +156,7 @@ switch ($_POST['aksi']) {
     case 'del':
         $id = $_GET['id'];
         $delete = $data->destroy($nis, $id);
+        $deletemutu = $mutubayar->destroy($nis, $id);
         if ($delete) {
             success('Berhasil hapus data');
         } else {

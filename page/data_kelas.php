@@ -44,8 +44,8 @@ $data = $kelas->getAll();
                 <?php foreach ($data as $key => $value): ?>
                 <tr>
                   <td>
-                    <a href="index.php?page=data_kelas_edit&id=<?=$value['id_kelas']?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
-                    <a href="javascript:void(0)" onclick="confirmation('<?=$value['id_kelas']?>','page/data_kelas_act.php')" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                    <a href="index.php?page=data_kelas_edit&id=<?=$value['id_kelas']?>" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>
+                    <a href="javascript:void(0)" onclick="confirmation('<?=$value['id_kelas']?>','page/data_kelas_act.php')" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
                   </td>
                   <td><?=$key + 1?></td>
                   <td><?=$value['kelas']?></td>

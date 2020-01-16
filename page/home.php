@@ -14,8 +14,8 @@
     <!-- Main content -->
     <section class="content">
       <div class="callout callout-success">
-        <h4>Selamat Datang Di Sistem Monitoring SMAN Mojoagung</h4>
-        <p>Silahkan hubungi ICT Center jika terjadi masalah dalam penggunaan Aplikasi ini</p>
+        <h4>Selamat Datang Di Sistem Absensi MAN 4 Jombang</h4>
+        <p>Silahkan hubungi Bagaian IT jika terjadi masalah dalam penggunaan Aplikasi ini</p>
       </div>
       <!-- Default box -->
       <!-- /.box -->

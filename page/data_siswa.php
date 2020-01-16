@@ -9,11 +9,11 @@ $userf = new User();
 <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Semua Siswa
+        Data Siswa dan Guru
       </h1>
       <ol class="breadcrumb">
         <li class="active"><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Data Semua Siswa</li>
+        <li class="active">Data Siswa dan Guru</li>
       </ol>
     </section>
 
@@ -27,7 +27,7 @@ $userf = new User();
           <form class="form-inline" method="POST" action="page/data_siswa_import.php" enctype="multipart/form-data">
             <div class="form-group">
                 <input type="file" name="file_siswa">
-                <p class="help-block"><a target="_blank" href="files/data_siswa_import.xls"><i class="fa fa-file"></i> Download Template Data Siswa</a></p>
+                <p class="help-block"><a target="_blank" href="files/data_siswa_import.xls"><i class="fa fa-file"></i> Download Template</a></p>
             </div>
             <div class="form-group">
               <button class="btn btn-primary">Import</button>
@@ -50,7 +50,7 @@ $userf = new User();
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Semua Siswa</h3>
+          <h3 class="box-title">Untuk Melihat data Guru terdapat pada menu Pengguna</h3>
         </div>
         <div class="box-body">
           <div class="row">

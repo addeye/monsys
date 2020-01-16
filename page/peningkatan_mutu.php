@@ -82,15 +82,15 @@ if (isset($_REQUEST['id_kelas'])) {
                             </div>
                         </td>
                     </tr>
-                    <?php foreach ($data as $key => $row): ?>
+                    <?php if ($data): foreach ($data as $key => $row): ?>
                         <input type="hidden" name="nis[]" value="<?=$row['no_induk']?>">
                         <tr>
                             <td><?=$key + 1?></td>
                             <td><?=$row['no_induk']?></td>
                             <td><?=$userf->getById($row['no_induk'])['NAMA']?></td>
-                            <td><input type="text" class="form-control nominal" name="nom_mutu[]" value="<?=rupiah($mutu->getByNis($row['no_induk'])['nominal'])?>"></td>
+                            <td><input type="text" class="form-control nominal" name="nom_mutu[]" value="<?=rupiah($mutu->getByNis($row['no_induk'], $th['nama'])['nominal'])?>"></td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php endforeach; endif; ?>
                 </tbody>
             </table>
             </div>

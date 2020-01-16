@@ -42,7 +42,7 @@ if (isset($_REQUEST['kelas_id'])) {
                 <select name="kelas_id" id="" class="form-control" onchange="location = this.value;">
                     <option value="index.php?page=kenaikan_kelas">Semua Kelas</option>
                     <?php foreach ($kelas as $row): ?>
-                    <option value="index.php?page=kenaikan_kelas&kelas_id=<?=$row['id_kelas']?>" <?=$_REQUEST['kelas_id'] == $row['id_kelas'] ? 'selected' : ''?> ><?=$row['kelas']?></option>
+                    <option value="index.php?page=kenaikan_kelas&kelas_id=<?=$row['id_kelas']?>" <?=isset($_REQUEST['kelas_id'])?$_REQUEST['kelas_id'] == $row['id_kelas'] ? 'selected' : '':''?> ><?=$row['kelas']?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -55,7 +55,7 @@ if (isset($_REQUEST['kelas_id'])) {
             <div class="box-tools">
                 <div class="form-group">
                     <a href="index.php?page=kenaikan_kelas_add" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</a>
-                    <a href="index.php?page=kenaikan_kelas_add" class="btn btn-primary"><i class="fa fa-plus"></i> Rombongan</a>
+                    <!-- <a href="index.php?page=kenaikan_kelas_add" class="btn btn-primary"><i class="fa fa-plus"></i> Rombongan</a> -->
                 </div>
             </div>
         </div>
@@ -77,8 +77,8 @@ if (isset($_REQUEST['kelas_id'])) {
                 <?php foreach ($data as $key => $value): ?>
                 <tr>
                   <td>
-                    <a href="index.php?page=kenaikan_kelas_edit&id=<?=$value['id']?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
-                    <a href="javascript:void(0)" onclick="confirmation('<?=$value['id']?>','page/kenaikan_kelas_act.php')" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                    <a href="index.php?page=kenaikan_kelas_edit&id=<?=$value['id']?>" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>
+                    <a href="javascript:void(0)" onclick="confirmation('<?=$value['id']?>','page/kenaikan_kelas_act.php')" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
                   </td>
                   <td><?=$key + 1?></td>
                   <td><?=$value['no_induk']?></td>

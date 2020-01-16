@@ -1,10 +1,17 @@
 <?php
-
 class Akademik extends Controller
 {
+    private $tahun_ajaran;
+    private $semester;
+    private $tahun;
+
     public function __construct()
     {
         parent::__construct();
+        $this->tahun_ajaran = new TahunAjaran();
+        $aktif = $this->tahun_ajaran->getByActive();
+        $this->semester = $aktif['semester_id'];
+        $this->tahun = $aktif['nama'];
     }
 
     public function getAll()
@@ -59,6 +66,19 @@ class Akademik extends Controller
         }
     }
 
+    public function getByKelasAjaranAktif($kelas)
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT t_akademik.id, t_akademik.no_induk, t_relasifp.NAMA as nama, t_relasifp.NO_HP as no_hp FROM t_akademik INNER JOIN t_relasifp ON t_akademik.no_induk=t_relasifp.NO_INDUK WHERE t_akademik.kelas_id='$kelas' AND t_akademik.tahun_ajaran = '$this->tahun'");
+            $stmt->execute();
+            $rowFinger = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rowFinger;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
     public function getById($id)
     {
         try {
@@ -75,6 +95,17 @@ class Akademik extends Controller
     public function getByNisAjaran($no_induk, $tahun_ajaran)
     {
         $stmt = $this->conn->prepare("SELECT * FROM t_akademik WHERE no_induk = '$no_induk' AND tahun_ajaran='$tahun_ajaran' ");
+        $stmt->execute();
+        $rowFinger = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($rowFinger) {
+            return $rowFinger;
+        }
+        return false;
+    }
+
+    public function getByNisAjaranAktif($no_induk)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM t_akademik WHERE no_induk = '$no_induk' AND tahun_ajaran='$this->tahun' ");
         $stmt->execute();
         $rowFinger = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($rowFinger) {
