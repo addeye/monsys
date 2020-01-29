@@ -109,7 +109,7 @@ class Kehadiran extends Controller
     public function getByKelasAjaranAktifFirstTime($kelas,$tanggal)
     {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM t_kehadiran WHERE kelas_id='$kelas' AND semester='$this->semester' AND tahun_ajaran='$this->tahun' AND kelas_id='$kelas' AND waktu='Jam Ke-1' AND tanggal='$tanggal'");
+            $stmt = $this->conn->prepare("SELECT * FROM t_kehadiran WHERE kelas_id='$kelas' AND semester='$this->semester' AND tahun_ajaran='$this->tahun' AND waktu='Jam Ke-1' AND tanggal='$tanggal'");
             $stmt->execute();
             $rowFinger = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -119,9 +119,71 @@ class Kehadiran extends Controller
         }
     }
 
-    public function getByKelasAjaranAktifRekap()
+    public function getDateGroupByKelasMapel($kelas_id,$mapel_id)
     {
+        try {
+            $stmt = $this->conn->prepare("SELECT tanggal
+                        FROM t_kehadiran
+                        WHERE kelas_id='$kelas_id'
+                        AND mapel_id='$mapel_id'
+                        AND semester='$this->semester'
+                        AND tahun_ajaran='$this->tahun'
+                        GROUP BY tanggal");
+            $stmt->execute();
+            $rowFinger = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+            return $rowFinger;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function getSiswaGroupByKelasMapel($kelas_id,$mapel_id)
+    {
+        try {
+            $stmt = $this->conn->prepare(
+                "SELECT t_kehadiran.no_induk, t_relasifp.NAMA as nama, t_kelas.kelas
+                FROM t_kehadiran
+                INNER JOIN t_relasifp ON t_relasifp.NO_INDUK=t_kehadiran.no_induk
+                INNER JOIN t_mapel ON t_mapel.id=t_kehadiran.mapel_id
+                INNER JOIN t_kelas ON t_kelas.id_kelas=t_kehadiran.kelas_id
+                WHERE t_kehadiran.kelas_id='$kelas_id'
+                AND t_kehadiran.mapel_id='$mapel_id'
+                AND t_kehadiran.semester='$this->semester'
+                AND t_kehadiran.tahun_ajaran='$this->tahun'
+                GROUP BY t_kehadiran.no_induk");
+            $stmt->execute();
+            $rowFinger = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rowFinger;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function getStatusByIndukKelasMapel($no_induk,$kelas_id,$mapel_id,$tanggal)
+    {
+        try {
+            $stmt = $this->conn->prepare(
+                "SELECT t_kehadiran.status
+                FROM t_kehadiran
+                INNER JOIN t_relasifp ON t_relasifp.NO_INDUK=t_kehadiran.no_induk
+                INNER JOIN t_mapel ON t_mapel.id=t_kehadiran.mapel_id
+                INNER JOIN t_kelas ON t_kelas.id_kelas=t_kehadiran.kelas_id
+                WHERE t_kehadiran.kelas_id='$kelas_id'
+                AND t_kehadiran.mapel_id='$mapel_id'
+                AND t_kehadiran.no_induk='$no_induk'
+                AND t_kehadiran.tanggal = '$tanggal'
+                -- AND t_kehadiran.waktu = 'Jam Ke-1'
+                AND t_kehadiran.semester='$this->semester'
+                AND t_kehadiran.tahun_ajaran='$this->tahun'");
+            $stmt->execute();
+            $rowFinger = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $rowFinger['status'];
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     public function getById($id)

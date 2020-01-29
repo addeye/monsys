@@ -47,6 +47,9 @@ if (isset($_GET['logout'])) {
   <![endif]-->
 
   <style type="text/css">
+    .label-purple{
+      background: purple;
+    }
     .help-block-red {
       background: red;
     }

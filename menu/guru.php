@@ -37,6 +37,7 @@
     <ul class="treeview-menu">
       <li><a href="index.php?page=kehadiran_piket"><i class="fa fa-circle-o"></i> Absensi</a></li>
       <li><a href="index.php?page=laporan_piket"><i class="fa fa-circle-o"></i> Laporan</a></li>
+      <li><a href="index.php?page=rekap_kehadiran_piket"><i class="fa fa-circle-o"></i> Rekap Kehadiran</a></li>
     </ul>
   </li>
 <?php endif; ?>

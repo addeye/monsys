@@ -2,7 +2,8 @@
 $user->cek_guru();
 
 $kelas_id = '';
-$mapel_id = '';
+$start = '';
+$end = '';
 $tanggal = date('Y-m-d');
 $guru_id = $_SESSION['user_id'];
 
@@ -18,20 +19,9 @@ $data_rows = [];
 $kelas_row = $kelas->getByMengajarGuru($_SESSION['user_id']);
 
 if (isset($_GET['kelas_id'])) {
-    $mapel_id = $_GET['mapel_id'];
     $kelas_id = $_GET['kelas_id'];
-
-    $tanggal_semua = $kehadiran->getDateGroupByKelasMapel($kelas_id,$mapel_id);
-    foreach($tanggal_semua as $row){
-        $tanggal_rows[] = $row['tanggal'];
-    }
-    $siswa_rows = $kehadiran->getSiswaGroupByKelasMapel($kelas_id,$mapel_id);
-    // return var_dump($siswa_rows);
-    foreach($siswa_rows as $key=>$sr){
-        foreach($tanggal_rows as $tr){
-            $siswa_rows[$key]['status'][] = $kehadiran->getStatusByIndukKelasMapel($sr['no_induk'],$kelas_id,$mapel_id,$tr);
-        }
-    }
+    $start = $_GET['start'];
+    $end = $_GET['end'];
     // return var_dump($siswa_rows);
 }
 
@@ -60,7 +50,7 @@ if (isset($_GET['kelas_id'])) {
             <form class="form-inline" method="GET">
               <input type="hidden" name="page" value="rekap_kehadiran">
               <div class="form-group">
-                <select class="form-control" name="kelas_id" onchange="showMapelByKelas(this.value,'#mapel_id')" required>
+                <select class="form-control" name="kelas_id" required>
                     <option value="">Pilih Kelas</option>
                     <?php foreach ($kelas_row as $row): ?>
                     <option value="<?=$row['id_kelas']?>" <?=$kelas_id == $row['id_kelas'] ? 'selected' : ''?> ><?=$row['kelas']?></option>
@@ -68,9 +58,10 @@ if (isset($_GET['kelas_id'])) {
                 </select>
                 </div>
                 <div class="form-group">
-                    <select name="mapel_id" id="mapel_id" class="form-control" required>
-                        <option value="">Pilih Mapel</option>
-                    </select>
+                    <input type="date" name="start" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="date" name="end" class="form-control">
                 </div>
               <button class="btn btn-primary"><i class="fa fa-search"></i></button>
             </form>
@@ -113,8 +104,3 @@ if (isset($_GET['kelas_id'])) {
       <!-- /.box -->
     </section>
     <!-- /.content -->
-    <script>
-        $(document).ready(function(){
-            showMapelByKelas(<?=$kelas_id?>,'#mapel_id',<?=$mapel_id?>);
-        });
-    </script>

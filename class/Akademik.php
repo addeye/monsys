@@ -69,7 +69,11 @@ class Akademik extends Controller
     public function getByKelasAjaranAktif($kelas)
     {
         try {
-            $stmt = $this->conn->prepare("SELECT t_akademik.id, t_akademik.no_induk, t_relasifp.NAMA as nama, t_relasifp.NO_HP as no_hp FROM t_akademik INNER JOIN t_relasifp ON t_akademik.no_induk=t_relasifp.NO_INDUK WHERE t_akademik.kelas_id='$kelas' AND t_akademik.tahun_ajaran = '$this->tahun'");
+            $stmt = $this->conn->prepare("SELECT t_akademik.id, t_akademik.no_induk, t_relasifp.NAMA as nama, t_relasifp.NO_HP as no_hp
+                        FROM t_akademik
+                        INNER JOIN t_relasifp ON t_akademik.no_induk=t_relasifp.NO_INDUK
+                        WHERE t_akademik.kelas_id='$kelas'
+                        AND t_akademik.tahun_ajaran = '$this->tahun'");
             $stmt->execute();
             $rowFinger = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

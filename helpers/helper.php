@@ -82,7 +82,7 @@ function status_color($text)
         return 'label-success';
     } elseif ($text == 'Alpha') {
         return 'label-danger';
-    } elseif ($text == 'Telat') {
+    } elseif ($text == 'Terlambat') {
         return 'label-purple';
     }
 }
